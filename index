@@ -641,6 +641,13 @@
                             </div>
                         </div>
                         <div class="metric-card">
+                            <div class="metric-label">Won</div>
+                            <div class="metric-value" id="wonLeads">---</div>
+                            <div class="metric-trend">
+                                <span>↗</span> Closed Deals
+                            </div>
+                        </div>
+                        <div class="metric-card">
                             <div class="metric-label">Claimed Leads</div>
                             <div class="metric-value" id="claimedLeads">---</div>
                             <div class="metric-trend">
@@ -648,11 +655,11 @@
                             </div>
                         </div>
                         <div class="metric-card">
-                            <div class="metric-label">Total Contacts</div>
-                            <div class="metric-value" id="totalContacts">---</div>
-                            <div class="metric-trend">
-                                <span>↗</span> Enriched Database
-                            </div>
+                            <div class="metric-label">In Communication</div>
+<div class="metric-value" id="totalContacts">---</div>
+<div class="metric-trend">
+    <span>↗</span> Active Conversations
+</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-label">Today's Prospects</div>
@@ -923,12 +930,12 @@
                 // Lead Performance Metrics
                 updateElement('newLeads', data.newLeads || 0);
                 updateElement('claimedLeads', data.claimedLeads || 0);
-                updateElement('totalContacts', data.totalContacts || 0);
-                updateElement('todaysProspects', data.avgClaimsRate || 0); // Using avgClaimsRate as Today's Prospects
+                updateElement('totalContacts', data.inCommunication || 0);
+                updateElement('todaysProspects', data.todaysProspects || 0); // Fixed to use correct field
+updateElement('wonLeads', data.wonLeads || 0);
                 
                 // System Performance Metrics
-                const avgContacts = calculateAvgContactsPerCompany(data);
-                updateElement('avgContactsPerCompany', avgContacts);
+                updateElement('avgContactsPerCompany', data.avgContactsPerCompany || 0);
                 
                 const uptime = data.systemUptime || 99.2;
                 updateElement('systemUptime', `${uptime}%`);
