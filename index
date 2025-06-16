@@ -693,7 +693,7 @@
                             </div>
                         </div>
                         <div class="performance-card success">
-                            <div class="metric-label">Enrichment Success</div>
+                            <div class="metric-label">Conversion Rate</div>
                             <div class="metric-value" id="enrichmentSuccess">---%</div>
                             <div class="progress-bar">
                                 <div class="progress-fill" id="enrichmentProgress" style="width: 75%"></div>
@@ -941,9 +941,10 @@ updateElement('wonLeads', data.wonLeads || 0);
                 updateElement('systemUptime', `${uptime}%`);
                 updateProgressBar('uptimeProgress', uptime);
                 
-                const enrichmentSuccess = calculateEnrichmentSuccess(data);
-                updateElement('enrichmentSuccess', `${enrichmentSuccess}%`);
-                updateProgressBar('enrichmentProgress', enrichmentSuccess);
+                const conversionRate = data.conversionRate || '0%';
+                updateElement('enrichmentSuccess', conversionRate);
+                const conversionNum = parseInt(conversionRate.replace('%', '')) || 0;
+                updateProgressBar('enrichmentProgress', conversionNum);
                 
                 console.log('✅ Dashboard display updated successfully');
                 
@@ -982,17 +983,6 @@ updateElement('wonLeads', data.wonLeads || 0);
     return avg;
 }
 
-        function calculateEnrichmentSuccess(data) {
-    const claimedLeads = data.claimedLeads || 0;
-    const enrichedLeads = data.enrichedLeads || 0;
-    
-    if (claimedLeads === 0) return 0;
-    
-    // Simple success rate: enriched / claimed * 100
-    // 3 enriched out of 8 claimed = 38%
-    const successScore = (enrichedLeads / claimedLeads) * 100;
-    return Math.round(successScore);
-}
 
         // MOCK DATA GENERATOR FOR TESTING
         function generateMockData() {
