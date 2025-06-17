@@ -72,7 +72,7 @@
         
         .logo-img {
     width: 180px;
-    height:180px;
+    height: 180px;
     border-radius: 20px;
     object-fit: contain;
 }
@@ -656,12 +656,12 @@
                         </div>
                         <div class="metric-card">
                             <div class="metric-label">In Communication</div>
-<div class="metric-value" id="inCommunication">---</div>
+<div class="metric-value" id="totalContacts">---</div>
 <div class="metric-trend">
     <span>↗</span> Active Conversations
 </div>
                         </div>
-                        </div>
+                       
                     </div>
                 </section>
 
@@ -679,7 +679,7 @@
                                 <span>↗</span> Quality Ratio
                             </div>
                         </div>
-                    
+                        
                         <div class="performance-card success">
                             <div class="metric-label">Conversion Rate</div>
                             <div class="metric-value" id="enrichmentSuccess">---%</div>
@@ -918,8 +918,8 @@
                 // Lead Performance Metrics
                 updateElement('newLeads', data.newLeads || 0);
                 updateElement('claimedLeads', data.claimedLeads || 0);
-                updateElement('inCommunication', data.inCommunication || 0);
-                updateElement('wonLeads', data.wonLeads || 0);
+                updateElement('totalContacts', data.inCommunication || 0);
+updateElement('wonLeads', data.wonLeads || 0);
                 
                 // System Performance Metrics
                 updateElement('avgContactsPerCompany', data.avgContactsPerCompany || 0);
