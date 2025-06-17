@@ -71,11 +71,11 @@
         }
         
         .logo-img {
-    width: 180px;
-    height: 180px;
-    border-radius: 20px;
-    object-fit: contain;
-}
+            width: 180px;
+            height: 180px;
+            border-radius: 20px;
+            object-fit: contain;
+        }
         
         .logo-text {
             font-size: 24px;
@@ -118,6 +118,64 @@
             50% { opacity: 0.5; }
         }
         
+        /* Refresh button improvements */
+        .refresh-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface-white);
+            border: 1px solid var(--border-light);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .refresh-btn:hover {
+            background: var(--surface-gray);
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+        }
+        
+        .refresh-btn.loading .refresh-icon {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Debug indicator for stats accuracy */
+        .stats-debug {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: monospace;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .stats-debug.show {
+            display: block;
+        }
+        
+        .stats-debug.success {
+            background: rgba(46, 125, 50, 0.9);
+        }
+        
+        .stats-debug.error {
+            background: rgba(244, 67, 54, 0.9);
+        }
+
         /* Main Content */
         .main-content {
             display: grid;
@@ -153,36 +211,6 @@
             font-size: 24px;
             font-weight: 700;
             color: var(--text-primary);
-        }
-        
-        .refresh-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--surface-white);
-            border: 1px solid var(--border-light);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .refresh-btn:hover {
-            background: var(--surface-gray);
-            border-color: var(--primary-green);
-            color: var(--primary-green);
-        }
-        
-        .refresh-btn.loading .refresh-icon {
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
         }
         
         /* Intelligence Cards */
@@ -296,6 +324,38 @@
             transition: width 0.3s ease;
         }
         
+        /* Data accuracy indicators */
+        .metric-card.accurate {
+            border-left: 4px solid var(--success-green);
+        }
+        
+        .metric-card.warning {
+            border-left: 4px solid var(--warning-orange);
+        }
+        
+        .metric-card.error {
+            border-left: 4px solid var(--error-red);
+        }
+        
+        .metric-status {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success-green);
+        }
+        
+        .metric-status.loading {
+            background: var(--warning-orange);
+            animation: pulse 1s infinite;
+        }
+        
+        .metric-status.error {
+            background: var(--error-red);
+        }
+
         /* Intelligence Alerts */
         .intelligence-alerts {
             display: flex;
@@ -477,6 +537,37 @@
             padding-right: 40px;
         }
         
+        /* Form validation states */
+        .form-input.valid {
+            border-color: var(--success-green);
+            background-color: rgba(76, 175, 80, 0.05);
+        }
+        
+        .form-input.invalid {
+            border-color: var(--error-red);
+            background-color: rgba(244, 67, 54, 0.05);
+        }
+        
+        .form-select.valid {
+            border-color: var(--success-green);
+        }
+        
+        .validation-message {
+            font-size: 12px;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .validation-message.success {
+            color: var(--success-green);
+        }
+        
+        .validation-message.error {
+            color: var(--error-red);
+        }
+
         /* Buttons */
         .btn-primary {
             width: 100%;
@@ -496,6 +587,13 @@
         .btn-primary:hover {
             transform: translateY(-1px);
             box-shadow: 0 8px 25px rgba(46, 125, 50, 0.3);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
         
         .btn-secondary {
@@ -602,9 +700,9 @@
             <div class="logo-section">
                 <a href="#" class="logo">
                     <img src="logo-dumpstercrushr.jpg" alt="DumpsterCrushr Logo" class="logo-img" 
-     onerror="this.style.display='none'" 
-     onload="document.querySelector('.logo-text').style.display='none'">
-<span class="logo-text">DumpsterCrushr</span>
+                         onerror="this.style.display='none'" 
+                         onload="document.querySelector('.logo-text').style.display='none'">
+                    <span class="logo-text">DumpsterCrushr</span>
                 </a>
                 <div class="platform-badge">Intelligence Platform</div>
             </div>
@@ -634,6 +732,7 @@
                     </div>
                     <div class="metrics-grid">
                         <div class="metric-card">
+                            <div class="metric-status" id="newLeadsStatus"></div>
                             <div class="metric-label">New Company Leads</div>
                             <div class="metric-value" id="newLeads">---</div>
                             <div class="metric-trend">
@@ -641,6 +740,7 @@
                             </div>
                         </div>
                         <div class="metric-card">
+                            <div class="metric-status" id="wonLeadsStatus"></div>
                             <div class="metric-label">Won</div>
                             <div class="metric-value" id="wonLeads">---</div>
                             <div class="metric-trend">
@@ -648,6 +748,7 @@
                             </div>
                         </div>
                         <div class="metric-card">
+                            <div class="metric-status" id="claimedLeadsStatus"></div>
                             <div class="metric-label">Claimed Leads</div>
                             <div class="metric-value" id="claimedLeads">---</div>
                             <div class="metric-trend">
@@ -655,13 +756,13 @@
                             </div>
                         </div>
                         <div class="metric-card">
+                            <div class="metric-status" id="inCommunicationStatus"></div>
                             <div class="metric-label">In Communication</div>
-<div class="metric-value" id="totalContacts">---</div>
-<div class="metric-trend">
-    <span>↗</span> Active Conversations
-</div>
+                            <div class="metric-value" id="inCommunication">---</div>
+                            <div class="metric-trend">
+                                <span>↗</span> Active Conversations
+                            </div>
                         </div>
-                       
                     </div>
                 </section>
 
@@ -682,15 +783,15 @@
                         
                         <div class="performance-card success">
                             <div class="metric-label">Conversion Rate</div>
-                            <div class="metric-value" id="enrichmentSuccess">---%</div>
+                            <div class="metric-value" id="conversionRate">---%</div>
                             <div class="progress-bar">
-                                <div class="progress-fill" id="enrichmentProgress" style="width: 75%"></div>
+                                <div class="progress-fill" id="conversionProgress" style="width: 0%"></div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- Waste Management Intelligence Section -->
+                <!-- Sample Intelligence Section (unchanged) -->
                 <section class="intelligence-section">
                     <div class="section-header">
                         <span class="section-icon">🏗️</span>
@@ -802,6 +903,7 @@
                     <div class="form-group">
                         <label class="form-label">Your Email</label>
                         <input type="email" class="form-input" id="userEmail" placeholder="your.email@company.com" required>
+                        <div class="validation-message" id="emailValidation" style="display: none;"></div>
                     </div>
                     
                     <button type="submit" class="btn-primary" id="submitBtn">
@@ -822,7 +924,11 @@
                 </form>
             </div>
         </main>
+        
+        <!-- Debug indicator -->
+        <div class="stats-debug" id="statsDebug"></div>
     </div>
+
 <script>
         // DEBUG MODE - Set to false for production
         const DEBUG_MODE = false;
@@ -846,18 +952,21 @@
         let statsLoading = false;
         const STATS_COOLDOWN = 10000; // 10 second minimum between calls
 
-        // SAFE STATS LOADING WITH THROTTLING
+        // IMPROVED STATS LOADING WITH BETTER ERROR HANDLING
         async function loadDashboardStats() {
             // Prevent simultaneous calls
             if (statsLoading) {
                 console.log('Stats already loading, skipping...');
+                showDebugMessage('Loading in progress...', 'loading');
                 return;
             }
             
             // Throttle calls - minimum 10 seconds between requests
             const now = Date.now();
             if (now - lastStatsLoad < STATS_COOLDOWN) {
-                console.log(`Stats cooldown active. ${Math.ceil((STATS_COOLDOWN - (now - lastStatsLoad)) / 1000)}s remaining`);
+                const remaining = Math.ceil((STATS_COOLDOWN - (now - lastStatsLoad)) / 1000);
+                console.log(`Stats cooldown active. ${remaining}s remaining`);
+                showDebugMessage(`Cooldown: ${remaining}s`, 'warning');
                 return;
             }
             
@@ -865,16 +974,20 @@
             lastStatsLoad = now;
             
             try {
-                // Add loading state to refresh button
+                // Show loading states
+                setMetricStatuses('loading');
                 const refreshBtn = document.querySelector('.refresh-btn');
                 if (refreshBtn) {
                     refreshBtn.classList.add('loading');
                 }
                 
+                showDebugMessage('Loading stats...', 'loading');
+                
                 if (DEBUG_MODE) {
                     console.log('🔧 DEBUG MODE: Using mock data');
                     const mockData = generateMockData();
                     updateDashboardDisplay(mockData);
+                    showDebugMessage('Mock data loaded', 'success');
                     return;
                 }
                 
@@ -893,13 +1006,24 @@
                 const data = await response.json();
                 console.log('✅ Dashboard data loaded:', data);
                 
+                // Validate data structure
+                if (!validateStatsData(data)) {
+                    throw new Error('Invalid data structure received');
+                }
+                
                 dashboardData = data;
                 updateDashboardDisplay(data);
+                setMetricStatuses('success');
+                showDebugMessage('Stats updated successfully', 'success');
                 
             } catch (error) {
                 console.error('❌ Error loading dashboard stats:', error);
-                // Show fallback data or error state
-                updateDashboardDisplay(generateMockData());
+                setMetricStatuses('error');
+                showDebugMessage(`Error: ${error.message}`, 'error');
+                
+                // Show fallback data with warning
+                const fallbackData = generateMockData();
+                updateDashboardDisplay(fallbackData);
             } finally {
                 statsLoading = false;
                 // Remove loading state from refresh button
@@ -907,6 +1031,36 @@
                 if (refreshBtn) {
                     refreshBtn.classList.remove('loading');
                 }
+            }
+        }
+
+        // VALIDATE STATS DATA STRUCTURE
+        function validateStatsData(data) {
+            const requiredFields = ['newLeads', 'claimedLeads', 'wonLeads', 'inCommunication'];
+            return requiredFields.every(field => data.hasOwnProperty(field) && typeof data[field] === 'number');
+        }
+
+        // SET METRIC STATUS INDICATORS
+        function setMetricStatuses(status) {
+            const statusElements = ['newLeadsStatus', 'wonLeadsStatus', 'claimedLeadsStatus', 'inCommunicationStatus'];
+            statusElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.className = `metric-status ${status}`;
+                }
+            });
+        }
+
+        // SHOW DEBUG MESSAGES
+        function showDebugMessage(message, type) {
+            const debugEl = document.getElementById('statsDebug');
+            if (debugEl) {
+                debugEl.textContent = message;
+                debugEl.className = `stats-debug show ${type}`;
+                
+                setTimeout(() => {
+                    debugEl.classList.remove('show');
+                }, 3000);
             }
         }
 
@@ -918,21 +1072,22 @@
                 // Lead Performance Metrics
                 updateElement('newLeads', data.newLeads || 0);
                 updateElement('claimedLeads', data.claimedLeads || 0);
-                updateElement('totalContacts', data.inCommunication || 0);
-updateElement('wonLeads', data.wonLeads || 0);
+                updateElement('inCommunication', data.inCommunication || 0);
+                updateElement('wonLeads', data.wonLeads || 0);
                 
                 // System Performance Metrics
-                updateElement('avgContactsPerCompany', data.avgContactsPerCompany || 0);
+                updateElement('avgContactsPerCompany', data.avgContactsPerCompany || '0.0');
                 
                 const conversionRate = data.conversionRate || '0%';
-                updateElement('enrichmentSuccess', conversionRate);
+                updateElement('conversionRate', conversionRate);
                 const conversionNum = parseInt(conversionRate.replace('%', '')) || 0;
-                updateProgressBar('enrichmentProgress', conversionNum);
+                updateProgressBar('conversionProgress', conversionNum);
                 
                 console.log('✅ Dashboard display updated successfully');
                 
             } catch (error) {
                 console.error('❌ Error updating dashboard display:', error);
+                showDebugMessage('Display update failed', 'error');
             }
         }
 
@@ -953,41 +1108,16 @@ updateElement('wonLeads', data.wonLeads || 0);
             }
         }
 
-        function calculateAvgContactsPerCompany(data) {
-    const enrichedLeads = data.enrichedLeads || 0;
-    const totalContacts = data.totalContacts || 0;
-    
-    // For DumpsterCrushr: 12 contacts across 4 companies = 3.0 avg
-    if (enrichedLeads === 0) return '0.0';
-    
-    // Calculate based on companies that have contacts, not just enriched status
-    const companiesWithContacts = 4; // This should come from your API
-    const avg = companiesWithContacts > 0 ? (totalContacts / companiesWithContacts).toFixed(1) : '0.0';
-    return avg;
-}
-
-
         // MOCK DATA GENERATOR FOR TESTING
         function generateMockData() {
             return {
                 newLeads: 12,
                 claimedLeads: 8,
-                enrichedLeads: 6,
+                wonLeads: 3,
+                inCommunication: 5,
                 totalContacts: 18,
-                avgClaimsRate: 3,
-                systemUptime: 99.2,
-                manualOutreachLeads: 2,
-                intelligence_alerts: [
-                    {
-                        priority_level: "hot",
-                        priority_text: "PERMIT ALERT",
-                        timing: "2 days ago",
-                        company_name: "Test Company A",
-                        event_description: "Mock permit filed",
-                        opportunity_text: "Test opportunity",
-                        source: "Mock data source"
-                    }
-                ]
+                avgContactsPerCompany: '3.2',
+                conversionRate: '67%'
             };
         }
 
@@ -996,19 +1126,7 @@ updateElement('wonLeads', data.wonLeads || 0);
             return AUTHORIZED_EMAILS.includes(email.toLowerCase().trim());
         }
 
-        // Initialize dashboard on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 DumpsterCrushr Dashboard initialized');
-            loadDashboardStats();
-            
-            // No auto-refresh - only refresh on:
-            // 1. Page load (above)
-            // 2. Manual refresh button click (handled in Part 4)
-            // 3. Successful form submission (handled in Part 4)
-        });
-    </script>
-<script>
-// FORM SUBMISSION HANDLER
+        // FORM SUBMISSION HANDLER
         async function handleFormSubmission(event) {
             event.preventDefault();
             
@@ -1113,121 +1231,56 @@ updateElement('wonLeads', data.wonLeads || 0);
                 }
             }
         }
-        
-        // REFRESH BUTTON HANDLER
-        function handleRefreshClick() {
-            console.log('🔄 Manual refresh triggered');
-            loadDashboardStats();
-        }
-        
-        // KEYBOARD SHORTCUTS
-        document.addEventListener('keydown', function(event) {
-            // Ctrl+R or Cmd+R for refresh (in addition to browser refresh)
-            if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
-                event.preventDefault();
-                loadDashboardStats();
-            }
-            
-            // Ctrl+Shift+D for debug mode toggle
-            if (event.ctrlKey && event.shiftKey && event.key === 'D') {
-                console.log('🔧 Debug mode toggle (developer feature)');
-                // This could toggle DEBUG_MODE if needed for development
-            }
-        });
-        
-        // FORM VALIDATION HELPERS
+
+        // EMAIL VALIDATION HELPER
         function validateEmailField() {
             const emailInput = document.getElementById('userEmail');
+            const emailValidation = document.getElementById('emailValidation');
             const email = emailInput.value.trim();
             
-            if (email && !isAuthorizedEmail(email)) {
-                emailInput.style.borderColor = 'var(--error-red)';
-                showMessage('This email is not authorized. Contact support for access.', 'error');
-            } else {
-                emailInput.style.borderColor = 'var(--border-light)';
-                if (document.getElementById('messageDiv').classList.contains('error')) {
-                    document.getElementById('messageDiv').style.display = 'none';
+            if (email) {
+                if (!isAuthorizedEmail(email)) {
+                    emailInput.className = 'form-input invalid';
+                    emailValidation.className = 'validation-message error';
+                    emailValidation.textContent = '❌ This email is not authorized. Contact support for access.';
+                    emailValidation.style.display = 'flex';
+                } else {
+                    emailInput.className = 'form-input valid';
+                    emailValidation.className = 'validation-message success';
+                    emailValidation.textContent = '✅ Email authorized';
+                    emailValidation.style.display = 'flex';
                 }
+            } else {
+                emailInput.className = 'form-input';
+                emailValidation.style.display = 'none';
             }
         }
         
         // INITIALIZE EVENT LISTENERS
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 DumpsterCrushr Dashboard initialized');
+            loadDashboardStats();
+            
             // Form submission
             const form = document.getElementById('prospectForm');
             if (form) {
                 form.addEventListener('submit', handleFormSubmission);
             }
             
-            // Email validation on blur
+            // Email validation on blur and input
             const emailInput = document.getElementById('userEmail');
             if (emailInput) {
                 emailInput.addEventListener('blur', validateEmailField);
+                emailInput.addEventListener('input', validateEmailField);
             }
             
             // Refresh button click
             const refreshBtn = document.querySelector('.refresh-btn');
             if (refreshBtn) {
-                refreshBtn.addEventListener('click', handleRefreshClick);
-            }
-            
-            // Form field change handlers for better UX
-            const locationSelect = document.getElementById('location');
-            const industrySelect = document.getElementById('industry');
-            
-            if (locationSelect) {
-                locationSelect.addEventListener('change', function() {
-                    console.log('📍 Location selected:', this.value);
-                });
-            }
-            
-            if (industrySelect) {
-                industrySelect.addEventListener('change', function() {
-                    console.log('🏭 Industry selected:', this.value);
-                });
+                refreshBtn.addEventListener('click', loadDashboardStats);
             }
             
             console.log('✅ All event listeners initialized');
-        });
-        
-        // UTILITY FUNCTIONS
-        function formatNumber(num) {
-            if (num >= 1000) {
-                return (num / 1000).toFixed(1) + 'K';
-            }
-            return num.toString();
-        }
-        
-        function formatCurrency(amount) {
-            return new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0,
-            }).format(amount);
-        }
-        
-        function getTimeAgo(timestamp) {
-            const now = new Date();
-            const time = new Date(timestamp);
-            const diff = now - time;
-            const minutes = Math.floor(diff / 60000);
-            
-            if (minutes < 1) return 'Just now';
-            if (minutes < 60) return `${minutes}m ago`;
-            if (minutes < 1440) return `${Math.floor(minutes / 60)}h ago`;
-            return `${Math.floor(minutes / 1440)}d ago`;
-        }
-        
-        // ERROR HANDLING
-        window.addEventListener('error', function(event) {
-            console.error('🚨 Global error caught:', event.error);
-            // Could send error reports to monitoring service
-        });
-        
-        window.addEventListener('unhandledrejection', function(event) {
-            console.error('🚨 Unhandled promise rejection:', event.reason);
-            // Could send error reports to monitoring service
         });
         
         console.log('🎉 DumpsterCrushr Dashboard fully loaded and ready!');
