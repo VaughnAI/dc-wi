@@ -938,7 +938,7 @@
         <div class="form-group">
             <label class="form-label">Target Location</label>
             <select class="form-select" id="location">
-                <option value="">Select Wisconsin location</option>
+                <option value="">Select Your Market</option>
                 <option value="Milwaukee">Milwaukee</option>
                 <option value="Madison">Madison</option>
                 <option value="Appleton">Appleton</option>
@@ -978,7 +978,7 @@
         <div class="form-group">
             <label class="form-label">Company Location</label>
             <select class="form-select" id="companyLocation">
-                <option value="">Select Wisconsin location</option>
+                <option value="">Select Your Market</option>
                 <option value="Milwaukee, WI">Milwaukee, WI</option>
                 <option value="Madison, WI">Madison, WI</option>
                 <option value="Appleton, WI">Appleton, WI</option>
