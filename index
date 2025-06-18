@@ -948,7 +948,7 @@
         <div class="form-group">
             <label class="form-label">Target Industry</label>
             <select class="form-select" id="industry">
-                <option value="">Select industry</option>
+                <option value="">Select Industry</option>
                 <option value="Manufacturing & Industrial">Manufacturing & Industrial</option>
                 <option value="Construction & Contractors">Construction & Contractors</option>
                 <option value="Food Processing & Restaurants">Food Processing & Restaurants</option>
@@ -971,7 +971,7 @@
                 <input type="text" class="form-input" id="companyName" placeholder="e.g., Johnson Controls">
             </div>
             <div class="form-help-text">
-                Enter partial company names - we'll find matches like "Johnson Controls Co" or "Jonson Contrls"
+                Enter the company name you want to research.
             </div>
         </div>
         
