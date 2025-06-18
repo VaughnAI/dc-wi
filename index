@@ -691,6 +691,56 @@
             color: #c62828;
             border: 1px solid #ffcdd2;
         }
+/* Toggle Switch Styles */
+        .search-toggle {
+            display: flex;
+            background: var(--surface-gray);
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-light);
+        }
+
+        .toggle-option {
+            flex: 1;
+            padding: 8px 16px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            border: none;
+            background: transparent;
+        }
+
+        .toggle-option.active {
+            background: var(--primary-green);
+            color: white;
+            box-shadow: 0 2px 4px rgba(46, 125, 50, 0.2);
+        }
+
+        .toggle-option:hover:not(.active) {
+            background: var(--surface-white);
+            color: var(--primary-green);
+        }
+
+        /* Form sections visibility */
+        .form-section {
+            display: block;
+        }
+
+        .form-section.hidden {
+            display: none;
+        }
+
+        .form-help-text {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
@@ -873,54 +923,90 @@
                 </div>
 
                 <form id="prospectForm">
-                    <div class="form-group">
-                        <label class="form-label">Target Location</label>
-                        <select class="form-select" id="location" required>
-                            <option value="">Select Wisconsin location</option>
-                            <option value="Milwaukee">Milwaukee</option>
-                            <option value="Madison">Madison</option>
-                            <option value="Appleton">Appleton</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Target Industry</label>
-                        <select class="form-select" id="industry" required>
-                            <option value="">Select industry</option>
-                            <option value="Manufacturing & Industrial">Manufacturing & Industrial</option>
-                            <option value="Construction & Contractors">Construction & Contractors</option>
-                            <option value="Food Processing & Restaurants">Food Processing & Restaurants</option>
-                            <option value="Retail & Shopping Centers">Retail & Shopping Centers</option>
-                            <option value="Healthcare Facilities">Healthcare Facilities</option>
-                            <option value="Logistics & Warehousing">Logistics & Warehousing</option>
-                            <option value="Entertainment & Event Venues">Entertainment & Event Venues</option>
-                            <option value="Office Buildings & Corporate">Office Buildings & Corporate</option>
-                            <option value="Educational Institutions">Educational Institutions</option>
-                            <option value="Hospitality & Hotels">Hospitality & Hotels</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Your Email</label>
-                        <input type="email" class="form-input" id="userEmail" placeholder="your.email@company.com" required>
-                        <div class="validation-message" id="emailValidation" style="display: none;"></div>
-                    </div>
-                    
-                    <button type="submit" class="btn-primary" id="submitBtn">
-                        🎯 Generate Leads
-                    </button>
-                    
-                    <a href="mailto:rob@ten12productions.com?subject=DumpsterCrushr%20Support%20Request&body=Hi%20Rob,%0D%0A%0D%0AI%20need%20help%20with%20the%20DumpsterCrushr%20dashboard.%0D%0A%0D%0ADetails:%0D%0A" 
-                       class="btn-secondary">
-                        📧 Need Help? Contact Support
-                    </a>
-                    
-                    <div class="loading-state" id="loadingDiv">
-                        <div class="loading-spinner"></div>
-                        <p class="loading-text">Finding prospects...</p>
-                    </div>
+                   <!-- Search Type Toggle -->
+    <div class="search-toggle">
+        <button type="button" class="toggle-option active" id="toggleIndustryLocation">
+            Industry + Location
+        </button>
+        <button type="button" class="toggle-option" id="toggleCompanyResearch">
+            Company Research
+        </button>
+    </div>
 
-                    <div class="message-state" id="messageDiv" style="display: none;"></div>
+    <!-- Industry + Location Section -->
+    <div class="form-section" id="industryLocationSection">
+        <div class="form-group">
+            <label class="form-label">Target Location</label>
+            <select class="form-select" id="location">
+                <option value="">Select Wisconsin location</option>
+                <option value="Milwaukee">Milwaukee</option>
+                <option value="Madison">Madison</option>
+                <option value="Appleton">Appleton</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">Target Industry</label>
+            <select class="form-select" id="industry">
+                <option value="">Select industry</option>
+                <option value="Manufacturing & Industrial">Manufacturing & Industrial</option>
+                <option value="Construction & Contractors">Construction & Contractors</option>
+                <option value="Food Processing & Restaurants">Food Processing & Restaurants</option>
+                <option value="Retail & Shopping Centers">Retail & Shopping Centers</option>
+                <option value="Healthcare Facilities">Healthcare Facilities</option>
+                <option value="Logistics & Warehousing">Logistics & Warehousing</option>
+                <option value="Entertainment & Event Venues">Entertainment & Event Venues</option>
+                <option value="Office Buildings & Corporate">Office Buildings & Corporate</option>
+                <option value="Educational Institutions">Educational Institutions</option>
+                <option value="Hospitality & Hotels">Hospitality & Hotels</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Company Research Section -->
+    <div class="form-section hidden" id="companyResearchSection">
+        <div class="form-group">
+            <label class="form-label">Target Company Name</label>
+            <div class="company-input-container">
+                <input type="text" class="form-input" id="companyName" placeholder="e.g., Johnson Controls">
+            </div>
+            <div class="form-help-text">
+                Enter partial company names - we'll find matches like "Johnson Controls Co" or "Jonson Contrls"
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">Company Location</label>
+            <select class="form-select" id="companyLocation">
+                <option value="">Select Wisconsin location</option>
+                <option value="Milwaukee, WI">Milwaukee, WI</option>
+                <option value="Madison, WI">Madison, WI</option>
+                <option value="Appleton, WI">Appleton, WI</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Your Email</label>
+        <input type="email" class="form-input" id="userEmail" placeholder="your.email@company.com" required>
+        <div class="validation-message" id="emailValidation" style="display: none;"></div>
+    </div>
+    
+    <button type="submit" class="btn-primary" id="submitBtn">
+        🎯 Generate Leads
+    </button>
+    
+    <a href="mailto:rob@ten12productions.com?subject=DumpsterCrushr%20Support%20Request&body=Hi%20Rob,%0D%0A%0D%0AI%20need%20help%20with%20the%20DumpsterCrushr%20dashboard.%0D%0A%0D%0ADetails:%0D%0A" 
+       class="btn-secondary">
+        📧 Need Help? Contact Support
+    </a>
+    
+    <div class="loading-state" id="loadingDiv">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Finding prospects...</p>
+    </div>
+
+    <div class="message-state" id="messageDiv" style="display: none;"></div>
                 </form>
             </div>
         </main>
@@ -936,7 +1022,8 @@
         // API Endpoints
         const API_ENDPOINTS = {
             stats: 'https://vaughnai.app.n8n.cloud/webhook/dumpster-crushr-wi-stats-webhook',
-            form: 'https://vaughnai.app.n8n.cloud/webhook/dumpster-crushr-webhook'
+            form: 'https://vaughnai.app.n8n.cloud/webhook/dumpster-crushr-webhook',
+            research: 'https://vaughnai.app.n8n.cloud/webhook/company-research-dc-wi'
         };
 
         // Authorized emails for form submissions
@@ -1120,6 +1207,46 @@
                 conversionRate: '67%'
             };
         }
+// SEARCH TYPE TOGGLE FUNCTIONALITY
+let currentSearchType = 'industry_location';
+
+function initializeToggle() {
+    const toggleIndustryLocation = document.getElementById('toggleIndustryLocation');
+    const toggleCompanyResearch = document.getElementById('toggleCompanyResearch');
+    const industryLocationSection = document.getElementById('industryLocationSection');
+    const companyResearchSection = document.getElementById('companyResearchSection');
+    
+    toggleIndustryLocation.addEventListener('click', () => {
+        currentSearchType = 'industry_location';
+        toggleIndustryLocation.classList.add('active');
+        toggleCompanyResearch.classList.remove('active');
+        industryLocationSection.classList.remove('hidden');
+        companyResearchSection.classList.add('hidden');
+        updateFormTitle();
+    });
+    
+    toggleCompanyResearch.addEventListener('click', () => {
+        currentSearchType = 'company_research';
+        toggleCompanyResearch.classList.add('active');
+        toggleIndustryLocation.classList.remove('active');
+        companyResearchSection.classList.remove('hidden');
+        industryLocationSection.classList.add('hidden');
+        updateFormTitle();
+    });
+}
+
+function updateFormTitle() {
+    const formTitle = document.querySelector('.form-title');
+    const formSubtitle = document.querySelector('.form-subtitle');
+    
+    if (currentSearchType === 'company_research') {
+        formTitle.textContent = 'Company Research';
+        formSubtitle.textContent = 'Research specific companies and find similar alternatives in Wisconsin';
+    } else {
+        formTitle.textContent = 'Generate New Prospects';
+        formSubtitle.textContent = 'Find Wisconsin businesses that need mobile dumpster compaction services';
+    }
+}
 
         // EMAIL VALIDATION
         function isAuthorizedEmail(email) {
@@ -1134,51 +1261,79 @@
             const loadingDiv = document.getElementById('loadingDiv');
             const messageDiv = document.getElementById('messageDiv');
             const form = document.getElementById('prospectForm');
-            
-            // Get form data
-            const location = document.getElementById('location').value;
-            const industry = document.getElementById('industry').value;
             const userEmail = document.getElementById('userEmail').value.trim();
             
-            // Validate required fields
-            if (!location || !industry || !userEmail) {
-                showMessage('Please fill in all required fields.', 'error');
+            // Validate email first
+            if (!userEmail) {
+                showMessage('Please enter your email address.', 'error');
                 return;
             }
             
-            // Validate email authorization
             if (!isAuthorizedEmail(userEmail)) {
                 showMessage('Access denied. Please contact support for authorization.', 'error');
                 return;
             }
             
-            // Validate email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(userEmail)) {
                 showMessage('Please enter a valid email address.', 'error');
                 return;
             }
             
-            try {
-                // Show loading state
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Generating Leads...';
-                loadingDiv.style.display = 'block';
-                messageDiv.style.display = 'none';
+            let formData;
+            let endpoint;
+            
+            if (currentSearchType === 'company_research') {
+                // Company Research Mode
+                const companyName = document.getElementById('companyName').value.trim();
+                const companyLocation = document.getElementById('companyLocation').value;
                 
-                console.log('📤 Submitting form data:', { location, industry, userEmail });
+                if (!companyName || !companyLocation) {
+                    showMessage('Please fill in both company name and location.', 'error');
+                    return;
+                }
                 
-                // Prepare form data
-                const formData = {
+                formData = {
+                    search_type: 'company_name',
+                    company_name: companyName,
+                    location: companyLocation,
+                    user_id: userEmail,
+                    timestamp: new Date().toISOString(),
+                    source: 'dumpstercrushr-dashboard-research'
+                };
+                endpoint = API_ENDPOINTS.research;
+                
+            } else {
+                // Industry + Location Mode
+                const location = document.getElementById('location').value;
+                const industry = document.getElementById('industry').value;
+                
+                if (!location || !industry) {
+                    showMessage('Please select both location and industry.', 'error');
+                    return;
+                }
+                
+                formData = {
                     location: location,
                     industry: industry,
                     user_id: userEmail,
                     timestamp: new Date().toISOString(),
                     source: 'dumpstercrushr-dashboard'
                 };
+                endpoint = API_ENDPOINTS.form;
+            }
+            
+            try {
+                // Show loading state
+                submitBtn.disabled = true;
+                submitBtn.textContent = currentSearchType === 'company_research' ? 'Researching Company...' : 'Generating Leads...';
+                loadingDiv.style.display = 'block';
+                messageDiv.style.display = 'none';
                 
-                // Submit to n8n webhook
-                const response = await fetch(API_ENDPOINTS.form, {
+                console.log('📤 Submitting form data:', formData);
+                
+                // Submit to appropriate n8n webhook
+                const response = await fetch(endpoint, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1194,7 +1349,10 @@
                 console.log('✅ Form submission successful:', result);
                 
                 // Show success message
-                showMessage('🎯 Lead generation started! Check your email for results.', 'success');
+                const successMessage = currentSearchType === 'company_research' 
+                    ? '🔍 Company research started! Check your email for detailed analysis.'
+                    : '🎯 Lead generation started! Check your email for results.';
+                showMessage(successMessage, 'success');
                 
                 // Reset form
                 form.reset();
@@ -1206,15 +1364,18 @@
                 
             } catch (error) {
                 console.error('❌ Form submission error:', error);
-                showMessage('Error generating leads. Please try again or contact support.', 'error');
+                const errorMessage = currentSearchType === 'company_research'
+                    ? 'Error starting company research. Please try again or contact support.'
+                    : 'Error generating leads. Please try again or contact support.';
+                showMessage(errorMessage, 'error');
             } finally {
                 // Reset loading state
                 submitBtn.disabled = false;
-                submitBtn.textContent = '🎯 Generate Leads';
+                submitBtn.textContent = currentSearchType === 'company_research' ? '🔍 Research Company' : '🎯 Generate Leads';
                 loadingDiv.style.display = 'none';
             }
-        }
-        
+            }
+            
         // MESSAGE DISPLAY HELPER
         function showMessage(message, type = 'info') {
             const messageDiv = document.getElementById('messageDiv');
@@ -1257,9 +1418,13 @@
         }
         
         // INITIALIZE EVENT LISTENERS
+        // INITIALIZE EVENT LISTENERS
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 DumpsterCrushr Dashboard initialized');
             loadDashboardStats();
+            
+            // Initialize toggle functionality
+            initializeToggle();
             
             // Form submission
             const form = document.getElementById('prospectForm');
@@ -1282,7 +1447,7 @@
             
             console.log('✅ All event listeners initialized');
         });
-        
+            
         console.log('🎉 DumpsterCrushr Dashboard fully loaded and ready!');
     </script>
 </body>
