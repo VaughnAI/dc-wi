@@ -112,6 +112,51 @@
             border-radius: 50%;
             animation: pulse 2s infinite;
         }
+        /* Top Navigation Menu Styles */
+.top-nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 8px 14px;
+    background: var(--surface-gray);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    background: var(--surface-white);
+    border-color: var(--primary-green);
+    color: var(--primary-green);
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(46, 125, 50, 0.15);
+}
+
+.nav-link:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .top-nav {
+        gap: 8px;
+    }
+    
+    .nav-link {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}
         
         @keyframes pulse {
             0%, 100% { opacity: 1; }
@@ -747,20 +792,30 @@
     <div class="app-container">
         <!-- Header -->
         <header class="header">
-            <div class="logo-section">
-                <a href="#" class="logo">
-                    <img src="logo-dumpstercrushr.jpg" alt="DumpsterCrushr Logo" class="logo-img" 
-                         onerror="this.style.display='none'" 
-                         onload="document.querySelector('.logo-text').style.display='none'">
-                    <span class="logo-text">DumpsterCrushr</span>
-                </a>
-                <div class="platform-badge">Intelligence Platform</div>
-            </div>
-            <div class="status-indicator">
-                <div class="status-dot"></div>
-                <span>System Active</span>
-            </div>
-        </header>
+    <div class="logo-section">
+        <a href="#" class="logo">
+            <img src="logo-dumpstercrushr.jpg" alt="DumpsterCrushr Logo" class="logo-img" 
+                 onerror="this.style.display='none'" 
+                 onload="document.querySelector('.logo-text').style.display='none'">
+            <span class="logo-text">DumpsterCrushr</span>
+        </a>
+        <div class="platform-badge">Intelligence Platform</div>
+    </div>
+    
+    <nav class="top-nav">
+        <a href="https://airtable.com/apptS2s8zRaPf9zFr/pagKfGriFNIbOWULo" target="_blank" class="nav-link">
+            Access Database
+        </a>
+        <a href="mailto:hello@vaughnai.com?subject=DumpsterCrushr%20Support%20Request&body=Hi%20Team,%0D%0A%0D%0AI%20need%20help%20with%20the%20DumpsterCrushr%20dashboard.%0D%0A%0D%0ADetails:%0D%0A" class="nav-link">
+            Contact Support
+        </a>
+    </nav>
+    
+    <div class="status-indicator">
+        <div class="status-dot"></div>
+        <span>System Active</span>
+    </div>
+</header>
 
         <!-- Main Content -->
         <main class="main-content">
@@ -996,7 +1051,7 @@
         🎯 Generate Leads
     </button>
     
-    <a href="mailto:rob@ten12productions.com?subject=DumpsterCrushr%20Support%20Request&body=Hi%20Rob,%0D%0A%0D%0AI%20need%20help%20with%20the%20DumpsterCrushr%20dashboard.%0D%0A%0D%0ADetails:%0D%0A" 
+    <a href="mailto:hello@vaughnai.com?subject=DumpsterCrushr%20Support%20Request&body=Hi%20Team,%0D%0A%0D%0AI%20need%20help%20with%20the%20DumpsterCrushr%20dashboard.%0D%0A%0D%0ADetails:%0D%0A" 
        class="btn-secondary">
         📧 Need Help? Contact Support
     </a>
